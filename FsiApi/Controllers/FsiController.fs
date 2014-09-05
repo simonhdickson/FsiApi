@@ -35,6 +35,6 @@ type FsiController() =
         let request =
             text.Split([|'\n'|])
             |> Seq.map (fun i -> let x = i.Split('=')
-                                 x.[0], x.[1])
+                                 x.[0], System.String.Join("=", x |> Seq.skip 1 |> Array.ofSeq))
             |> Map.ofSeq
         Fsi.eval request.["text"]
