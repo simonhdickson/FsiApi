@@ -26,10 +26,15 @@ module Fsi =
         with e -> e.ToString()
 
 /// Retrieves values.
-type FsiController() as this =
+type FsiController() =
     inherit ApiController()
 
     [<Route("fsi/eval")>]
     [<HttpPost>]
-    member x.Eval([<FromBody>] text) =
-        Fsi.eval text
+    member __.Eval([<FromBody>] text:string) =
+        let request =
+            text.Split([|'\n'|])
+            |> Seq.map (fun i -> let x = i.Split('=')
+                                 x.[0], x.[1])
+            |> Map.ofSeq
+        Fsi.eval request.["text"]
