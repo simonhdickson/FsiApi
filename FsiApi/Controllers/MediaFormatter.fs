@@ -6,9 +6,7 @@ open System.Threading.Tasks
 
 type TextMediaTypeFormatter() as this =
     inherit MediaTypeFormatter()
-    do this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/xml"))
     do this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/plain"))
-    do this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/javascript"))
 
     override  __.ReadFromStreamAsync(_, readStream, _, _) =
         let taskCompletionSource = new TaskCompletionSource<obj>();

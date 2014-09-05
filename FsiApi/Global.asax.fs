@@ -16,6 +16,5 @@ type Global() =
         config.Formatters.JsonFormatter.SerializerSettings.ContractResolver <- Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
 
     member x.Application_Start() =
-        GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling <- Newtonsoft.Json.ReferenceLoopHandling.Ignore
         GlobalConfiguration.Configure(Action<_> Global.RegisterWebApi)
         GlobalConfiguration.Configuration.Formatters.Insert(0, new TextMediaTypeFormatter())
