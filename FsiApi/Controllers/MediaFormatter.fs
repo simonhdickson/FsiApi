@@ -22,7 +22,8 @@ type TextMediaTypeFormatter() as this =
     override __.WriteToStreamAsync(_, value, writeStream, _, _) =
         let taskCompletionSource = new TaskCompletionSource<obj>();
         try
-            let serialized = System.Text.Encoding.Default.GetBytes(value :?> string)
+            let value = if value :?> string = null then "" else value :?> string
+            let serialized = System.Text.Encoding.Default.GetBytes(value)
             writeStream.Write(serialized, 0, serialized.Length)
             taskCompletionSource.SetResult()
         with
