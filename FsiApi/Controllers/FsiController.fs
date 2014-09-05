@@ -35,5 +35,5 @@ type FsiController() =
 
     [<Route("fsi/eval")>]
     [<HttpPost>]
-    member __.Eval([<FromBody>] command:SlashCommand) =
+    member __.Eval(command:SlashCommand) =
         Fsi.eval command.text
