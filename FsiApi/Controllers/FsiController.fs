@@ -25,17 +25,15 @@ module Fsi =
             | None -> "evaluation produced nothing."
         with e -> e.ToString()
 
+type SlashCommand = {
+    team_id:string; channel_id:string; channel_name:string
+    user_id:string; user_name:string; command:string; text:string }
+
 /// Retrieves values.
 type FsiController() =
     inherit ApiController()
 
     [<Route("fsi/eval")>]
     [<HttpPost>]
-    member __.Eval([<FromBody>] text:string) =
-        text
-//        let request =
-//            text.Split([|'\n'|])
-//            |> Seq.map (fun i -> let x = i.Split('=')
-//                                 x.[0], System.String.Join("=", x |> Seq.skip 1 |> Array.ofSeq))
-//            |> Map.ofSeq
-//        Fsi.eval request.["text"]
+    member __.Eval([<FromBody>] command:SlashCommand) =
+        Fsi.eval command.text
